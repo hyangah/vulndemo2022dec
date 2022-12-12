@@ -15,12 +15,7 @@ var (
 	sshAddr = flag.String("ssh_addr", ":2222", "Address the gomote SSH server should listen on")
 )
 
-func retrieveSSHKeys(ctx context.Context) (publicKey, privateKey []byte, err error) {
-	return remote.SSHKeyPair()
-}
-
 func main() {
-
 	ctx := context.Background()
 	sshCA := mustRetrieveSSHCertificateAuthority()
 	sp := remote.NewSessionPool(context.Background())
@@ -58,4 +53,8 @@ func mustRetrieveSSHCertificateAuthority() (privateKey []byte) {
 		log.Fatalf("unable to create SSH CA cert: %s", err)
 	}
 	return
+}
+
+func retrieveSSHKeys(ctx context.Context) (publicKey, privateKey []byte, err error) {
+	return remote.SSHKeyPair()
 }
